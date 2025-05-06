@@ -60,4 +60,42 @@
     cursor: not-allowed;
   }
   
+  .catalog-container, .history-container {
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+    background: #fafafa;
+  }
+  
+  .product-card:hover {
+    background-color: #e6f7ff;
+  }
+
+  .preferences-container {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .preference-group {
+    margin-bottom: 1rem;
+  }
+  
   /* You'll need to add more styling as you implement the components */

@@ -9,13 +9,21 @@ const Recommendations = ({ recommendations, isLoading }) => {
   
   return (
     <div className="recommendations-container">
+      <h3>Recommended for You</h3>
       {isLoading ? (
         <p>Loading recommendations...</p>
       ) : recommendations.length > 0 ? (
-        <div>
-          {/* Implement recommendations display here */}
-          <p>Implement recommendations display here</p>
-        </div>
+        <ul>
+          {recommendations.map((rec, index) => (
+            <li key={index}>
+              <strong>{rec.product.name}</strong> (${rec.product.price})  
+              <div>
+                <em>{rec.explanation}</em>
+              </div>
+              <small>Confidence: {rec.confidence_score}/10</small>
+            </li>
+          ))}
+        </ul>
       ) : (
         <p>No recommendations yet. Set your preferences and browse some products!</p>
       )}
