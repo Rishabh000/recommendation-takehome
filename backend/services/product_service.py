@@ -1,6 +1,7 @@
 import json
 from config import config
 
+
 class ProductService:
     """
     Service to handle product data operations

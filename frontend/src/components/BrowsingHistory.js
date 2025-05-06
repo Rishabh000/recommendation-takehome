@@ -5,12 +5,22 @@ const BrowsingHistory = ({ history, products, onClearHistory }) => {
   // This component should:
   // - Show products the user has clicked on
   // - Allow clearing the browsing history
-  
+  const historyProducts = products.filter((p) => history.includes(p.id));
   return (
     <div className="history-container">
       <h3>Your Browsing History</h3>
-      {/* Implement browsing history display here */}
-      <p>Implement browsing history display here</p>
+      {historyProducts.length === 0 ? (
+        <p>No products viewed yet.</p>
+      ) : (
+        <ul>
+          {historyProducts.map((product) => (
+            <li key={product.id}>
+              {product.name} – ${product.price} ({product.category})
+            </li>
+          ))}
+        </ul>
+      )}
+      <button onClick={onClearHistory}>Clear History</button>
     </div>
   );
 };

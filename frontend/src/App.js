@@ -17,6 +17,11 @@ function App() {
     brands: []
   });
   
+  const [filters, setFilters] = useState({
+    category: 'all',
+    brand: 'all',
+    sortBy: 'default',
+  });
   // State for browsing history
   const [browsingHistory, setBrowsingHistory] = useState([]);
   
@@ -73,6 +78,28 @@ function App() {
   const handleClearHistory = () => {
     setBrowsingHistory([]);
   };
+
+  const getFilteredProducts = () => {
+    let filtered = [...products];
+  
+    if (filters.category !== 'all') {
+      filtered = filtered.filter(p => p.category === filters.category);
+    }
+  
+    if (filters.brand !== 'all') {
+      filtered = filtered.filter(p => p.brand === filters.brand);
+    }
+  
+    if (filters.sortBy === 'price_asc') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (filters.sortBy === 'price_desc') {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (filters.sortBy === 'rating') {
+      filtered.sort((a, b) => b.rating - a.rating);
+    }
+  
+    return filtered;
+  };
   
   return (
     <div className="app">
@@ -104,12 +131,55 @@ function App() {
         </div>
         
         <div className="catalog-section">
-          <h2>Product Catalog</h2>
-          <Catalog 
-            products={products}
-            onProductClick={handleProductClick}
-            browsingHistory={browsingHistory}
-          />
+        <h2>Product Catalog</h2>
+
+{/* 🔽 Inline Filtering UI */}
+<div style={{ marginBottom: '1rem' }}>
+  <label>
+    Category:&nbsp;
+    <select
+      value={filters.category}
+      onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+    >
+      <option value="all">All</option>
+      {[...new Set(products.map(p => p.category))].map((cat) => (
+        <option key={cat} value={cat}>{cat}</option>
+      ))}
+    </select>
+  </label>
+
+  <label style={{ marginLeft: '1rem' }}>
+    Brand:&nbsp;
+    <select
+      value={filters.brand}
+      onChange={(e) => setFilters({ ...filters, brand: e.target.value })}
+    >
+      <option value="all">All</option>
+      {[...new Set(products.map(p => p.brand))].map((brand) => (
+        <option key={brand} value={brand}>{brand}</option>
+      ))}
+    </select>
+  </label>
+
+  <label style={{ marginLeft: '1rem' }}>
+    Sort By:&nbsp;
+    <select
+      value={filters.sortBy}
+      onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
+    >
+      <option value="default">Default</option>
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+      <option value="rating">Rating</option>
+    </select>
+  </label>
+</div>
+
+<Catalog 
+  products={getFilteredProducts()}
+  onProductClick={handleProductClick}
+  browsingHistory={browsingHistory}
+/>
         </div>
         
         <div className="recommendations-section">
