@@ -4,6 +4,8 @@ import uvicorn
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import os
+from services.llm_service import LLMService
+from config import config
 
 from services.llm_service import LLMService
 from services.product_service import ProductService
